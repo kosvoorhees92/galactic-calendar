@@ -3,81 +3,245 @@
 <head>
     <title>Earth & Galactic Calendar</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .calendar { display: flex; justify-content: space-between; margin-top: 30px; }
-        .earth, .galactic { width: 48%; padding: 15px; border-radius: 8px; }
-        .earth { background-color: #f0f8ff; border: 1px solid #add8e6; }
-        .galactic { background-color: #fff0f5; border: 1px solid #ffb6c1; }
-        h2 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        .time { font-size: 24px; font-weight: bold; margin: 10px 0; }
-        .date { font-size: 18px; margin-bottom: 20px; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar { 
+            display: flex; 
+            justify-content: space-between; 
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .earth, .galactic { 
+            flex: 1;
+            min-width: 300px;
+            padding: 25px; 
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .earth:hover, .galactic:hover {
+            transform: translateY(-5px);
+        }
+        
+        .earth { 
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+        }
+        
+        .galactic { 
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+        }
+        
+        h2 { 
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 15px;
+            margin-top: 0;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        
+        .time { 
+            font-size: 32px; 
+            font-weight: bold; 
+            margin: 20px 0;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .date { 
+            font-size: 20px; 
+            margin-bottom: 15px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .extra-info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .festival {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+            to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+        }
+        
+        .holiday {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-    <h1>Earth & Galactic Standard Calendar</h1>
-    
-    <div class="calendar">
-        <div class="earth">
-            <h2>Earth Time</h2>
-            <div class="time" id="earth-time">--:--:--</div>
-            <div class="date" id="earth-date">-- --- ----</div>
-        </div>
+    <div class="container">
+        <h1>🌍 Земной и Галактический Календарь ⭐</h1>
         
-        <div class="galactic">
-            <h2>Galactic Standard Time</h2>
-            <div class="time" id="galactic-time">--:--:--</div>
-            <div class="date" id="galactic-date">-- --- ----</div>
-            <div id="galactic-year">Year: -- ПБЯ/ДБЯ</div>
+        <div class="calendar">
+            <div class="earth">
+                <h2>🌍 Земное Время</h2>
+                <div class="time" id="earth-time">--:--:--</div>
+                <div class="date" id="earth-date">-- --- ----</div>
+                <div class="extra-info">
+                    <div>День в году: <span id="earth-day-of-year">---</span></div>
+                    <div>Неделя: <span id="earth-week">--</span></div>
+                </div>
+            </div>
+            
+            <div class="galactic">
+                <h2>⭐ Галактическое Стандартное Время</h2>
+                <div class="time" id="galactic-time">--:--:--</div>
+                <div class="date" id="galactic-date">-- --- ---- СГК</div>
+                <div class="extra-info">
+                    <div id="galactic-year">Год: -- ПБЯ/ДБЯ</div>
+                    <div>День в году: <span id="galactic-day-of-year">---</span></div>
+                </div>
+                <div id="special-day"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Earth time
+        // Галактические месяцы
+        const galacticMonths = [
+            "Элона", "Келона", "Селона", "Телона", "Нелона", 
+            "Хелона", "Мелона", "Елона", "Релона", "Велона"
+        ];
+        
+        // Праздничные дни между месяцами
+        const holidays = [
+            "День Независимости", "Праздник Урожая", "День Мира", 
+            "Фестиваль Света", "День Единения"
+        ];
+        
+        // Фестивальная неделя (дни 361-368)
+        const festivalDays = [
+            "Новый год", "День Будущего", "День Памяти", "День Свободы",
+            "День Галактики", "День Надежды", "День Мечты", "Канун Нового Года"
+        ];
+        
         function updateEarthTime() {
             const now = new Date();
-            document.getElementById('earth-time').textContent = now.toLocaleTimeString();
-            document.getElementById('earth-date').textContent = now.toLocaleDateString();
+            
+            // Обновляем время и дату
+            document.getElementById('earth-time').textContent = now.toLocaleTimeString('ru-RU');
+            document.getElementById('earth-date').textContent = now.toLocaleDateString('ru-RU', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // День в году
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('earth-day-of-year').textContent = dayOfYear;
+            
+            // Номер недели
+            const week = Math.ceil(dayOfYear / 7);
+            document.getElementById('earth-week').textContent = week;
         }
         
-        // Galactic time conversion
         function updateGalacticTime() {
             const now = new Date();
             
-            // Galactic time (same format as Earth for simplicity)
-            const gTime = now.toLocaleTimeString();
+            // Битва при Явине - 25 мая 1977 (релиз Звездных войн)
+            const battleOfYavin = new Date('1977-05-25');
+            const diffTime = now - battleOfYavin;
+            const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             
-            // Galactic date calculation (simplified)
-            const startDate = new Date('1977-05-25'); // Release date of Star Wars
-            const diffTime = now - startDate;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            // Галактический год = 368 дней
+            const gYear = Math.floor(totalDays / 368);
+            const dayInYear = totalDays % 368 + 1;
             
-            // Galactic Standard Calendar calculations
-            const gYear = Math.floor(diffDays / 368);
-            const yearRemainder = diffDays % 368;
+            // Время (синхронизировано с Земным для простоты)
+            document.getElementById('galactic-time').textContent = now.toLocaleTimeString('ru-RU');
             
-            // Month calculation (simplified)
-            let month = Math.floor(yearRemainder / 35);
-            if (month > 9) month = 9;
-            const day = yearRemainder % 35 + 1;
+            let dateStr = '';
+            let specialDay = '';
             
-            const monthNames = ["Элона", "Келона", "Селона", "Телона", "Нелона", 
-                              "Хелона", "Мелона", "Елона", "Релона", "Велона"];
+            if (dayInYear <= 350) {
+                // Обычные месяцы (350 дней = 10 месяцев по 35 дней)
+                const month = Math.floor((dayInYear - 1) / 35);
+                const day = ((dayInYear - 1) % 35) + 1;
+                dateStr = `${day} ${galacticMonths[month]} ${gYear} СГК`;
+            } else if (dayInYear <= 355) {
+                // Праздничные дни (351-355)
+                const holidayIndex = dayInYear - 351;
+                dateStr = `${holidays[holidayIndex]} ${gYear} СГК`;
+                specialDay = `<div class="holiday">🎉 ${holidays[holidayIndex]}</div>`;
+            } else if (dayInYear <= 360) {
+                // Дополнительные праздничные дни
+                dateStr = `Межгалактический Праздник ${dayInYear - 355} ${gYear} СГК`;
+                specialDay = `<div class="holiday">🌟 Межгалактический Праздник</div>`;
+            } else {
+                // Фестивальная неделя (361-368)
+                const festivalIndex = dayInYear - 361;
+                dateStr = `${festivalDays[festivalIndex]} ${gYear} СГК`;
+                specialDay = `<div class="festival">🎆 ${festivalDays[festivalIndex]} - Фестивальная Неделя!</div>`;
+            }
             
-            // ABY/BBY calculation
-            const abyYear = 0 + gYear; // 0 ABY is Battle of Yavin
+            // Определяем ПБЯ/ДБЯ (После/До Битвы при Явине)
+            const yearLabel = gYear >= 0 ? `${gYear} ПБЯ` : `${Math.abs(gYear)} ДБЯ`;
             
-            document.getElementById('galactic-time').textContent = gTime;
-            document.getElementById('galactic-date').textContent = `${day} ${monthNames[month]} ${gYear} СГК`;
-            document.getElementById('galactic-year').textContent = `Year: ${abyYear} ПБЯ`;
+            // Обновляем элементы
+            document.getElementById('galactic-date').textContent = dateStr;
+            document.getElementById('galactic-year').textContent = `Год: ${yearLabel}`;
+            document.getElementById('galactic-day-of-year').textContent = dayInYear;
+            document.getElementById('special-day').innerHTML = specialDay;
         }
         
-        // Update every second
+        // Обновление каждую секунду
         setInterval(() => {
             updateEarthTime();
             updateGalacticTime();
         }, 1000);
         
-        // Initial update
+        // Первоначальное обновление
         updateEarthTime();
         updateGalacticTime();
     </script>
