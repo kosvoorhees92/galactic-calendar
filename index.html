@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Earth & Galactic Calendar</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .calendar { display: flex; justify-content: space-between; margin-top: 30px; }
+        .earth, .galactic { width: 48%; padding: 15px; border-radius: 8px; }
+        .earth { background-color: #f0f8ff; border: 1px solid #add8e6; }
+        .galactic { background-color: #fff0f5; border: 1px solid #ffb6c1; }
+        h2 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .time { font-size: 24px; font-weight: bold; margin: 10px 0; }
+        .date { font-size: 18px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Earth & Galactic Standard Calendar</h1>
+    
+    <div class="calendar">
+        <div class="earth">
+            <h2>Earth Time</h2>
+            <div class="time" id="earth-time">--:--:--</div>
+            <div class="date" id="earth-date">-- --- ----</div>
+        </div>
+        
+        <div class="galactic">
+            <h2>Galactic Standard Time</h2>
+            <div class="time" id="galactic-time">--:--:--</div>
+            <div class="date" id="galactic-date">-- --- ----</div>
+            <div id="galactic-year">Year: -- ПБЯ/ДБЯ</div>
+        </div>
+    </div>
+
+    <script>
+        // Earth time
+        function updateEarthTime() {
+            const now = new Date();
+            document.getElementById('earth-time').textContent = now.toLocaleTimeString();
+            document.getElementById('earth-date').textContent = now.toLocaleDateString();
+        }
+        
+        // Galactic time conversion
+        function updateGalacticTime() {
+            const now = new Date();
+            
+            // Galactic time (same format as Earth for simplicity)
+            const gTime = now.toLocaleTimeString();
+            
+            // Galactic date calculation (simplified)
+            const startDate = new Date('1977-05-25'); // Release date of Star Wars
+            const diffTime = now - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Galactic Standard Calendar calculations
+            const gYear = Math.floor(diffDays / 368);
+            const yearRemainder = diffDays % 368;
+            
+            // Month calculation (simplified)
+            let month = Math.floor(yearRemainder / 35);
+            if (month > 9) month = 9;
+            const day = yearRemainder % 35 + 1;
+            
+            const monthNames = ["Элона", "Келона", "Селона", "Телона", "Нелона", 
+                              "Хелона", "Мелона", "Елона", "Релона", "Велона"];
+            
+            // ABY/BBY calculation
+            const abyYear = 0 + gYear; // 0 ABY is Battle of Yavin
+            
+            document.getElementById('galactic-time').textContent = gTime;
+            document.getElementById('galactic-date').textContent = `${day} ${monthNames[month]} ${gYear} СГК`;
+            document.getElementById('galactic-year').textContent = `Year: ${abyYear} ПБЯ`;
+        }
+        
+        // Update every second
+        setInterval(() => {
+            updateEarthTime();
+            updateGalacticTime();
+        }, 1000);
+        
+        // Initial update
+        updateEarthTime();
+        updateGalacticTime();
+    </script>
+</body>
+</html>
